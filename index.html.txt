@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOAL商城</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0b0b0b;
+    color:#fff;
+    text-align:center;
+}
+
+header{
+    padding:20px;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.products{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    padding:20px;
+}
+
+.product{
+    background:#111;
+    padding:15px;
+    border-radius:10px;
+    width:220px;
+}
+
+button{
+    background:#22c55e;
+    border:none;
+    padding:10px;
+    width:100%;
+    cursor:pointer;
+    border-radius:5px;
+    margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>⚽ GOAL商城</header>
+
+<h2>世界冠军同款 · 限量发售</h2>
+
+<div class="products">
+
+<div class="product">
+<h3>阿根廷球衣</h3>
+<p>59 SGD</p>
+<button>立即购买</button>
+</div>
+
+<div class="product">
+<h3>法国球衣</h3>
+<p>59 SGD</p>
+<button>立即购买</button>
+</div>
+
+<div class="product">
+<h3>葡萄牙球衣</h3>
+<p>59 SGD</p>
+<button>立即购买</button>
+</div>
+
+</div>
+
+</body>
+</html>
