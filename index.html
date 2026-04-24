@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GOAL商城</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#000;
+    color:#fff;
+}
+
+/* 顶部 */
+header{
+    display:flex;
+    justify-content:space-between;
+    padding:20px;
+    font-size:20px;
+    border-bottom:1px solid #222;
+}
+
+/* banner */
+.banner{
+    text-align:center;
+    padding:60px 20px;
+    background:linear-gradient(black,#111);
+}
+
+.banner h1{
+    font-size:36px;
+}
+
+/* 商品 */
+.products{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+    padding:20px;
+}
+
+.product{
+    background:#111;
+    padding:15px;
+    border-radius:10px;
+    width:220px;
+    transition:0.3s;
+}
+
+.product:hover{
+    transform:scale(1.05);
+}
+
+.product img{
+    width:100%;
+    border-radius:8px;
+}
+
+button{
+    background:#fff;
+    color:#000;
+    border:none;
+    padding:10px;
+    width:100%;
+    margin-top:10px;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+/* 购物车 */
+.cart{
+    position:fixed;
+    right:0;
+    top:0;
+    width:260px;
+    height:100%;
+    background:#111;
+    padding:20px;
+    border-left:1px solid #333;
+}
+
+.cart h2{
+    margin-top:0;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+<div>⚽ GOAL商城</div>
+<div>🛒 <span id="count">0</span></div>
+</header>
+
+<div class="banner">
+<h1>Wear Like Champions</h1>
+<p>世界冠军同款 · 限量发售</p>
+</div>
+
+<div class="products">
+
+<div class="product">
+<img src="https://picsum.photos/200?1">
+<h3>阿根廷球衣</h3>
+<p>59 SGD</p>
+<button onclick="addToCart('阿根廷球衣',59)">加入购物车</button>
+</div>
+
+<div class="product">
+<img src="https://picsum.photos/200?2">
+<h3>法国球衣</h3>
+<p>59 SGD</p>
+<button onclick="addToCart('法国球衣',59)">加入购物车</button>
+</div>
+
+<div class="product">
+<img src="https://picsum.photos/200?3">
+<h3>葡萄牙球衣</h3>
+<p>59 SGD</p>
+<button onclick="addToCart('葡萄牙球衣',59)">加入购物车</button>
+</div>
+
+</div>
+
+<div class="cart">
+<h2>购物车</h2>
+<ul id="cartList"></ul>
+<p>总价: $<span id="total">0</span></p>
+</div>
+
+<script>
+let cart = [];
+let total = 0;
+
+function addToCart(name, price){
+    cart.push({name, price});
+    total += price;
+
+    const list = document.getElementById("cartList");
+    const item = document.createElement("li");
+    item.textContent = name + " - $" + price;
+    list.appendChild(item);
+
+    document.getElementById("total").textContent = total;
+    document.getElementById("count").textContent = cart.length;
+}
+</script>
+
+</body>
+</html>
