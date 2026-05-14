@@ -1,154 +1,218 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GOAL商城</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>藏文基础学习 | Tibetan Basics</title>
+  <style>
+    :root {
+      --bg: #0b1120;
+      --panel: rgba(15, 23, 42, 0.75);
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-2: #a78bfa;
+      --line: rgba(148, 163, 184, 0.25);
+    }
 
-<style>
-body{
-    margin:0;
-    font-family:Arial, sans-serif;
-    background:#000;
-    color:#fff;
-}
+    * { box-sizing: border-box; }
 
-/* 顶部 */
-header{
-    display:flex;
-    justify-content:space-between;
-    padding:20px;
-    font-size:20px;
-    border-bottom:1px solid #222;
-}
+    body {
+      margin: 0;
+      font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.14), transparent 40%),
+        radial-gradient(circle at 80% 10%, rgba(167, 139, 250, 0.16), transparent 45%),
+        var(--bg);
+      min-height: 100vh;
+      line-height: 1.7;
+    }
 
-/* banner */
-.banner{
-    text-align:center;
-    padding:60px 20px;
-    background:linear-gradient(black,#111);
-}
+    .wrap {
+      width: min(1080px, 92vw);
+      margin: 0 auto;
+      padding: 28px 0 56px;
+    }
 
-.banner h1{
-    font-size:36px;
-}
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0 22px;
+      border-bottom: 1px solid var(--line);
+    }
 
-/* 商品 */
-.products{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:20px;
-    padding:20px;
-}
+    .logo {
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
 
-.product{
-    background:#111;
-    padding:15px;
-    border-radius:10px;
-    width:220px;
-    transition:0.3s;
-}
+    .hero {
+      margin-top: 36px;
+      padding: 56px 34px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: linear-gradient(145deg, rgba(56, 189, 248, 0.08), rgba(167, 139, 250, 0.08)), var(--panel);
+      backdrop-filter: blur(4px);
+    }
 
-.product:hover{
-    transform:scale(1.05);
-}
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      line-height: 1.25;
+    }
 
-.product img{
-    width:100%;
-    border-radius:8px;
-}
+    .hero p {
+      margin: 18px 0 0;
+      color: var(--muted);
+      max-width: 760px;
+    }
 
-button{
-    background:#fff;
-    color:#000;
-    border:none;
-    padding:10px;
-    width:100%;
-    margin-top:10px;
-    cursor:pointer;
-    border-radius:5px;
-}
+    .grid {
+      margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
 
-/* 购物车 */
-.cart{
-    position:fixed;
-    right:0;
-    top:0;
-    width:260px;
-    height:100%;
-    background:#111;
-    padding:20px;
-    border-left:1px solid #333;
-}
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      background: var(--panel);
+    }
 
-.cart h2{
-    margin-top:0;
-}
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 1.1rem;
+      color: #f8fafc;
+    }
 
-</style>
+    .card p,
+    .card li {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+
+    .card ul {
+      margin: 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .alphabet {
+      margin-top: 30px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      background: var(--panel);
+    }
+
+    .alphabet h2 {
+      margin-top: 0;
+      margin-bottom: 12px;
+    }
+
+    .syllables {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+    }
+
+    .syllable {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 10px 12px;
+      text-align: center;
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .tibetan {
+      font-size: 1.25rem;
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .phonetic {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    footer {
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      text-align: center;
+    }
+  </style>
 </head>
-
 <body>
+  <div class="wrap">
+    <nav>
+      <div class="logo">བོད་ཡིག · 藏文基础学习</div>
+      <div>简洁 / 系统 / 易上手</div>
+    </nav>
 
-<header>
-<div>⚽ GOAL商城</div>
-<div>🛒 <span id="count">0</span></div>
-</header>
+    <section class="hero">
+      <h1>从零开始学藏文：字母、发音与常用表达</h1>
+      <p>
+        这个页面为初学者提供一条清晰的入门路径：先认识藏文字母体系，再掌握拼读规则，最后通过短句练习建立语感。
+        内容精炼，适合每天 20 分钟持续学习。
+      </p>
+    </section>
 
-<div class="banner">
-<h1>Wear Like Champions</h1>
-<p>世界冠军同款 · 限量发售</p>
-</div>
+    <section class="grid">
+      <article class="card">
+        <h3>01 学习路径</h3>
+        <ul>
+          <li>先认字母：30 个基本辅音 + 4 个元音符号</li>
+          <li>再学拼读：前加字、后加字与上下加字</li>
+          <li>最后开口：从问候语到自我介绍</li>
+        </ul>
+      </article>
 
-<div class="products">
+      <article class="card">
+        <h3>02 发音建议</h3>
+        <ul>
+          <li>先慢后快，确保每个音节清晰</li>
+          <li>多做最小对比：清音/浊音、送气/不送气</li>
+          <li>每天跟读 5 分钟，录音复听纠正</li>
+        </ul>
+      </article>
 
-<div class="product">
-<img src="https://picsum.photos/200?1">
-<h3>阿根廷球衣</h3>
-<p>59 SGD</p>
-<button onclick="addToCart('阿根廷球衣',59)">加入购物车</button>
-</div>
+      <article class="card">
+        <h3>03 每日任务</h3>
+        <ul>
+          <li>记忆 5 个字母 + 2 个新词</li>
+          <li>手写 1 页音节组合</li>
+          <li>朗读 3 句基础表达</li>
+        </ul>
+      </article>
+    </section>
 
-<div class="product">
-<img src="https://picsum.photos/200?2">
-<h3>法国球衣</h3>
-<p>59 SGD</p>
-<button onclick="addToCart('法国球衣',59)">加入购物车</button>
-</div>
+    <section class="alphabet">
+      <h2>基础音节示例</h2>
+      <div class="syllables">
+        <div class="syllable"><div class="tibetan">ཀ</div><div class="phonetic">ka</div></div>
+        <div class="syllable"><div class="tibetan">ཁ</div><div class="phonetic">kha</div></div>
+        <div class="syllable"><div class="tibetan">ག</div><div class="phonetic">ga</div></div>
+        <div class="syllable"><div class="tibetan">ང</div><div class="phonetic">nga</div></div>
+        <div class="syllable"><div class="tibetan">ཅ</div><div class="phonetic">ca</div></div>
+        <div class="syllable"><div class="tibetan">ཆ</div><div class="phonetic">cha</div></div>
+        <div class="syllable"><div class="tibetan">ཇ</div><div class="phonetic">ja</div></div>
+        <div class="syllable"><div class="tibetan">ཉ</div><div class="phonetic">nya</div></div>
+      </div>
+    </section>
 
-<div class="product">
-<img src="https://picsum.photos/200?3">
-<h3>葡萄牙球衣</h3>
-<p>59 SGD</p>
-<button onclick="addToCart('葡萄牙球衣',59)">加入购物车</button>
-</div>
-
-</div>
-
-<div class="cart">
-<h2>购物车</h2>
-<ul id="cartList"></ul>
-<p>总价: $<span id="total">0</span></p>
-</div>
-
-<script>
-let cart = [];
-let total = 0;
-
-function addToCart(name, price){
-    cart.push({name, price});
-    total += price;
-
-    const list = document.getElementById("cartList");
-    const item = document.createElement("li");
-    item.textContent = name + " - $" + price;
-    list.appendChild(item);
-
-    document.getElementById("total").textContent = total;
-    document.getElementById("count").textContent = cart.length;
-}
-</script>
-
+    <footer>
+      建议学习节奏：每周 5 天，每天 20 分钟，坚持 4 周可完成入门。
+    </footer>
+  </div>
 </body>
 </html>
