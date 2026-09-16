@@ -1,288 +1,253 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PitchOne 独立球衣站</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="向野：用 90 天，把模糊的兴趣变成可验证的副业方向。">
+  <title>向野 · 你的 90 天探索计划</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap');
+
     :root {
-      --bg: #080b12;
-      --panel: #101722;
-      --panel-soft: #141d2b;
-      --text: #f2f6ff;
-      --muted: #9fb1cd;
-      --primary: #44d2ff;
-      --primary-strong: #00b7ff;
-      --line: rgba(255, 255, 255, 0.12);
-      --danger: #ff4f67;
-      --ok: #31d38b;
+      --ink: #14231f;
+      --muted: #65736e;
+      --cream: #f5f2e9;
+      --paper: #fbfaf5;
+      --green: #245b47;
+      --green-dark: #194737;
+      --lime: #d9ec88;
+      --orange: #ef7d45;
+      --line: #dcded4;
+      --white: #fff;
+      --shadow: 0 18px 50px rgba(35, 66, 55, .09);
     }
 
     * { box-sizing: border-box; }
-
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      font-family: "Inter", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
-      background: radial-gradient(circle at 15% 10%, #1a2740 0%, #0c1220 35%, #060910 100%);
-      color: var(--text);
-      min-height: 100vh;
+      color: var(--ink);
+      background: var(--cream);
+      font-family: "DM Sans", "Noto Sans SC", sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
 
-    header {
+    .topbar {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 max(6vw, 28px);
+      border-bottom: 1px solid rgba(20, 35, 31, .1);
+      background: rgba(245, 242, 233, .86);
+      backdrop-filter: blur(16px);
       position: sticky;
       top: 0;
       z-index: 20;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 14px 22px;
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(10px);
-      background: rgba(8, 11, 18, 0.8);
     }
+    .logo { display: flex; align-items: center; gap: 11px; font-size: 20px; font-weight: 700; letter-spacing: .08em; }
+    .logo-mark { width: 34px; height: 34px; display: grid; place-items: center; background: var(--green); color: var(--lime); border-radius: 50% 50% 50% 12px; transform: rotate(-8deg); }
+    .logo-mark span { transform: rotate(8deg); }
+    nav { display: flex; align-items: center; gap: 34px; }
+    nav a { color: var(--ink); text-decoration: none; font-size: 14px; }
+    .nav-cta { border: 1px solid var(--ink); border-radius: 99px; padding: 10px 18px; font-weight: 600; background: transparent; }
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 700;
-      letter-spacing: 0.4px;
-    }
-
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--primary);
-      box-shadow: 0 0 16px var(--primary);
-    }
-
-    .cart-chip {
-      border: 1px solid var(--line);
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 1fr 320px;
-      gap: 22px;
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 0 18px 20px;
-    }
-
+    main { overflow: hidden; }
     .hero {
-      background: linear-gradient(125deg, rgba(68, 210, 255, 0.16), rgba(0, 0, 0, 0.45));
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 30px 24px;
-      margin-bottom: 18px;
-    }
-
-    .hero h1 { margin: 0 0 8px; font-size: clamp(28px, 4vw, 42px); }
-    .hero p { margin: 0; color: var(--muted); }
-
-    .pill-row {
-      margin-top: 14px;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .pill {
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 5px 12px;
-      color: #dbe7ff;
-      font-size: 13px;
-    }
-
-    .products {
+      max-width: 1440px;
+      min-height: 690px;
+      margin: 0 auto;
+      padding: 86px max(6vw, 28px) 64px;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 16px;
-    }
-
-    .card {
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, var(--panel), var(--panel-soft));
-      border-radius: 12px;
-      overflow: hidden;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(68, 210, 255, 0.5);
-    }
-
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .card-body { padding: 12px; }
-    .team { margin: 0; font-weight: 700; }
-    .meta { margin: 6px 0 10px; color: var(--muted); font-size: 13px; }
-
-    .row {
-      display: flex;
+      grid-template-columns: 1.06fr .94fr;
       align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+      gap: 70px;
+      position: relative;
     }
+    .eyebrow { display: flex; align-items: center; gap: 12px; color: var(--green); font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 34px; height: 2px; background: var(--orange); }
+    h1 { margin: 25px 0 25px; max-width: 690px; font-size: clamp(48px, 6.4vw, 88px); font-weight: 600; line-height: 1.06; letter-spacing: -.065em; }
+    h1 em { color: var(--green); font-family: serif; font-weight: 400; }
+    .hero-copy { max-width: 600px; margin: 0; color: var(--muted); font-size: 18px; line-height: 1.85; }
+    .hero-actions { display: flex; align-items: center; gap: 24px; margin-top: 38px; }
+    .primary-btn { border: 0; border-radius: 99px; padding: 17px 25px; color: white; background: var(--green); box-shadow: 0 10px 28px rgba(36, 91, 71, .2); font-weight: 600; transition: .2s; }
+    .primary-btn:hover { transform: translateY(-2px); background: var(--green-dark); }
+    .text-link { color: var(--ink); text-underline-offset: 5px; font-weight: 600; font-size: 14px; }
 
-    .price {
-      font-size: 18px;
-      font-weight: 700;
+    .orbit { height: 490px; position: relative; display: grid; place-items: center; }
+    .orbit-ring { width: 410px; height: 410px; border: 1px solid rgba(36, 91, 71, .2); border-radius: 50%; position: absolute; }
+    .orbit-ring::after { content: ""; position: absolute; inset: 42px; border: 1px dashed rgba(36, 91, 71, .2); border-radius: inherit; }
+    .compass { width: 235px; height: 290px; background: var(--green); color: white; border-radius: 120px 120px 24px 24px; padding: 46px 30px 28px; text-align: center; box-shadow: var(--shadow); position: relative; z-index: 2; transform: rotate(3deg); }
+    .compass small { opacity: .6; font-size: 11px; letter-spacing: .15em; }
+    .compass strong { display: block; font-family: serif; font-size: 82px; font-weight: 400; line-height: 1; margin: 22px 0 4px; color: var(--lime); }
+    .compass p { margin: 0; font-size: 13px; opacity: .8; }
+    .float-card { position: absolute; z-index: 3; width: 185px; padding: 17px; background: var(--paper); border: 1px solid white; border-radius: 14px; box-shadow: var(--shadow); }
+    .float-card b { display: block; margin-bottom: 5px; font-size: 14px; }
+    .float-card span { font-size: 12px; color: var(--muted); }
+    .float-card.one { top: 48px; right: 2px; transform: rotate(4deg); }
+    .float-card.two { bottom: 46px; left: 0; transform: rotate(-5deg); }
+    .icon { width: 35px; height: 35px; display: grid; place-items: center; margin-bottom: 13px; border-radius: 9px; background: var(--lime); font-size: 17px; }
+
+    .reassure { background: var(--ink); color: white; padding: 26px max(6vw, 28px); }
+    .reassure-inner { max-width: 1260px; margin: auto; display: flex; justify-content: space-between; align-items: center; gap: 24px; }
+    .reassure p { margin: 0; font-size: 16px; }
+    .reassure strong { color: var(--lime); }
+    .mini-points { display: flex; gap: 28px; color: #bdc8c4; font-size: 13px; }
+    .mini-points span::before { content: "✓"; color: var(--lime); margin-right: 8px; }
+
+    .section { max-width: 1260px; margin: auto; padding: 105px max(4vw, 20px); }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 50px; }
+    .section-head h2 { margin: 12px 0 0; max-width: 700px; font-size: clamp(34px, 4vw, 53px); letter-spacing: -.045em; line-height: 1.15; }
+    .section-head p { max-width: 390px; margin: 0; color: var(--muted); line-height: 1.7; }
+
+    .paths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .path { padding: 30px; min-height: 330px; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 18px; background: rgba(251,250,245,.72); transition: .25s; }
+    .path:hover { transform: translateY(-6px); box-shadow: var(--shadow); background: var(--paper); }
+    .path-number { font-family: serif; font-size: 17px; color: var(--orange); }
+    .path h3 { margin: 42px 0 12px; font-size: 25px; }
+    .path p { margin: 0; color: var(--muted); line-height: 1.7; font-size: 14px; }
+    .path-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 28px; }
+    .path-tags span { padding: 7px 11px; border-radius: 99px; background: #e8ebe1; font-size: 12px; }
+
+    .plan-wrap { background: #e8eadf; }
+    .plan { max-width: 1260px; padding: 105px max(4vw, 20px); margin: auto; display: grid; grid-template-columns: .72fr 1.28fr; gap: 90px; }
+    .plan-intro { position: sticky; top: 120px; align-self: start; }
+    .plan h2 { margin: 14px 0 20px; font-size: clamp(38px, 4vw, 56px); letter-spacing: -.05em; line-height: 1.08; }
+    .plan-intro p { color: var(--muted); line-height: 1.7; }
+    .progress-label { display: flex; justify-content: space-between; margin: 34px 0 10px; font-size: 13px; }
+    .progress { height: 7px; overflow: hidden; background: #d0d4c9; border-radius: 9px; }
+    .progress-fill { width: 0; height: 100%; background: var(--orange); border-radius: inherit; transition: width .35s; }
+    .weeks { display: grid; gap: 14px; }
+    .week { display: grid; grid-template-columns: 74px 1fr auto; align-items: center; gap: 20px; padding: 24px; border-radius: 15px; background: var(--paper); border: 1px solid transparent; transition: .2s; }
+    .week:hover { border-color: #bdc5b9; }
+    .week-range { color: var(--green); font-size: 12px; font-weight: 700; letter-spacing: .08em; }
+    .week h3 { margin: 0 0 6px; font-size: 18px; }
+    .week p { margin: 0; color: var(--muted); font-size: 13px; }
+    .check { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid #bdc5b9; background: transparent; border-radius: 50%; color: transparent; transition: .2s; }
+    .week.done { opacity: .62; }
+    .week.done h3 { text-decoration: line-through; }
+    .week.done .check { background: var(--green); border-color: var(--green); color: white; }
+
+    .commit { max-width: 1260px; margin: 105px auto; padding: 64px; border-radius: 28px; background: var(--green); color: white; display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: center; position: relative; overflow: hidden; }
+    .commit::after { content: ""; position: absolute; width: 320px; height: 320px; right: -100px; bottom: -190px; border: 55px solid rgba(217,236,136,.12); border-radius: 50%; }
+    .commit h2 { margin: 0 0 16px; font-size: clamp(34px, 4vw, 52px); letter-spacing: -.04em; line-height: 1.12; }
+    .commit p { color: #c5d1cc; line-height: 1.7; }
+    .form { display: flex; gap: 10px; padding: 8px; background: white; border-radius: 99px; position: relative; z-index: 2; }
+    .form input { min-width: 0; flex: 1; border: 0; outline: 0; padding: 0 17px; color: var(--ink); background: transparent; }
+    .form button { border: 0; padding: 14px 20px; white-space: nowrap; border-radius: 99px; background: var(--lime); color: var(--ink); font-weight: 700; }
+    .form-note { min-height: 20px; margin: 12px 0 0 17px; color: var(--lime); font-size: 13px; }
+
+    footer { max-width: 1260px; margin: auto; padding: 0 max(4vw, 20px) 44px; display: flex; justify-content: space-between; color: var(--muted); font-size: 12px; }
+
+    @media (max-width: 900px) {
+      nav a:not(.nav-cta) { display: none; }
+      .hero { grid-template-columns: 1fr; padding-top: 60px; gap: 35px; }
+      .orbit { height: 430px; }
+      .section-head, .reassure-inner { align-items: flex-start; flex-direction: column; }
+      .paths { grid-template-columns: 1fr; }
+      .path { min-height: 255px; }
+      .plan { grid-template-columns: 1fr; gap: 45px; }
+      .plan-intro { position: static; }
+      .commit { margin: 65px 20px; padding: 48px 30px; grid-template-columns: 1fr; gap: 28px; }
     }
-
-    button {
-      border: none;
-      background: linear-gradient(120deg, var(--primary), var(--primary-strong));
-      color: #03212d;
-      font-weight: 700;
-      border-radius: 8px;
-      padding: 8px 12px;
-      cursor: pointer;
-    }
-
-    .cart {
-      border: 1px solid var(--line);
-      background: rgba(10, 15, 25, 0.9);
-      border-radius: 16px;
-      padding: 16px;
-      position: sticky;
-      top: 76px;
-      height: fit-content;
-    }
-
-    .cart h2 { margin: 0 0 10px; font-size: 20px; }
-
-    .cart ul {
-      margin: 0;
-      padding-left: 18px;
-      color: #d9e4fb;
-      min-height: 90px;
-    }
-
-    .cart li { margin: 8px 0; }
-
-    .summary {
-      border-top: 1px solid var(--line);
-      margin-top: 12px;
-      padding-top: 12px;
-      color: var(--muted);
-    }
-
-    .summary strong { color: var(--text); }
-
-    .checkout {
-      margin-top: 12px;
-      width: 100%;
-      background: linear-gradient(120deg, #39f4a3, var(--ok));
-      color: #08321d;
-    }
-
-    .note {
-      margin-top: 8px;
-      font-size: 12px;
-      color: #8193b0;
-      text-align: center;
-    }
-
-    @media (max-width: 980px) {
-      .layout {
-        grid-template-columns: 1fr;
-      }
-
-      .cart { position: static; }
+    @media (max-width: 560px) {
+      .topbar { height: 66px; padding: 0 18px; }
+      .nav-cta { padding: 8px 12px; font-size: 12px; }
+      .hero { padding: 50px 20px 40px; }
+      h1 { font-size: 49px; }
+      .hero-actions { align-items: flex-start; flex-direction: column; }
+      .orbit { height: 390px; transform: scale(.88); margin: -20px -35px; }
+      .mini-points { flex-wrap: wrap; gap: 10px 20px; }
+      .section, .plan { padding-top: 75px; padding-bottom: 75px; }
+      .week { grid-template-columns: 52px 1fr auto; gap: 12px; padding: 18px 14px; }
+      .commit { border-radius: 20px; }
+      .form { border-radius: 14px; flex-direction: column; }
+      .form input { padding: 14px; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="brand"><span class="dot"></span> PitchOne · 独立球衣商店</div>
-    <div class="cart-chip">🛒 已选 <span id="count">0</span> 件</div>
+  <header class="topbar">
+    <div class="logo"><span class="logo-mark"><span>↗</span></span>向野</div>
+    <nav>
+      <a href="#directions">探索方向</a><a href="#plan">90天计划</a><a href="#start" class="nav-cta">开始行动</a>
+    </nav>
   </header>
 
-  <main class="layout">
-    <section>
-      <div class="hero">
-        <h1>Jersey Drop 2026</h1>
-        <p>小众独立站 · 正版球衣 · 每周上新</p>
-        <div class="pill-row">
-          <span class="pill">全球直邮</span>
-          <span class="pill">7天无理由</span>
-          <span class="pill">支持球员印号</span>
-        </div>
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">A side project for your future</div>
+        <h1>不用现在就知道<br>答案，先<em>走出去。</em></h1>
+        <p class="hero-copy">工作之外，用每周 5 小时低成本探索。不是逼自己立刻转行，而是用真实行动找到一件你喜欢、擅长，并且有人愿意付费的事。</p>
+        <div class="hero-actions"><a href="#plan" class="primary-btn">制定我的探索计划&nbsp; →</a><a href="#directions" class="text-link">我还没有方向</a></div>
       </div>
-
-      <div class="products" id="products"></div>
+      <div class="orbit" aria-label="90天探索计划示意图">
+        <div class="orbit-ring"></div>
+        <div class="compass"><small>YOUR JOURNEY</small><strong>90</strong><p>天 · 从好奇到第一次收入</p></div>
+        <div class="float-card one"><div class="icon">✦</div><b>发现真实兴趣</b><span>从尝试中找答案</span></div>
+        <div class="float-card two"><div class="icon">¥</div><b>验证付费意愿</b><span>先赚到第一个 100 元</span></div>
+      </div>
     </section>
 
-    <aside class="cart">
-      <h2>购物车</h2>
-      <ul id="cartList"></ul>
-      <div class="summary">
-        总价：<strong>¥<span id="total">0</span></strong><br />
-        运费：<strong>¥20</strong>
+    <div class="reassure"><div class="reassure-inner"><p><strong>你不需要裸辞。</strong> 把转行当成一场有期限的小实验。</p><div class="mini-points"><span>每周 5 小时</span><span>预算不超过 ¥500</span><span>用结果而非想象判断</span></div></div></div>
+
+    <section class="section" id="directions">
+      <div class="section-head"><div><div class="eyebrow">从哪里开始</div><h2>先选一种你愿意持续解决的问题</h2></div><p>别急着寻找“天命”。从这三类低门槛路径中，选一个让你有一点兴奋的方向。</p></div>
+      <div class="paths">
+        <article class="path"><span class="path-number">01 / 创造</span><h3>把想法做成作品</h3><p>适合喜欢表达、审美或动手创造的人。先公开 3 个小作品，再观察谁被它吸引。</p><div class="path-tags"><span>内容创作</span><span>设计</span><span>摄影</span><span>手作</span></div></article>
+        <article class="path"><span class="path-number">02 / 服务</span><h3>用技能解决问题</h3><p>从身边人的真实麻烦出发，提供一次轻量服务，最快获得市场反馈与第一笔收入。</p><div class="path-tags"><span>咨询</span><span>自由职业</span><span>教练</span><span>本地服务</span></div></article>
+        <article class="path"><span class="path-number">03 / 产品</span><h3>让解决方案可复制</h3><p>把经验和工具封装成可以重复交付的产品，让收入慢慢摆脱时间限制。</p><div class="path-tags"><span>数字产品</span><span>小工具</span><span>课程</span><span>独立品牌</span></div></article>
       </div>
-      <button class="checkout">去结算</button>
-      <div class="note">提示：此页面为演示版，订单不会真实提交。</div>
-    </aside>
+    </section>
+
+    <section class="plan-wrap" id="plan"><div class="plan">
+      <div class="plan-intro"><div class="eyebrow">你的行动地图</div><h2>90 天，四步验证一个可能</h2><p>每完成一阶段就打勾。计划会保存在你的浏览器里，下一次回来可以接着走。</p><div class="progress-label"><span>当前进度</span><strong id="progressText">0 / 4</strong></div><div class="progress"><div class="progress-fill" id="progressFill"></div></div></div>
+      <div class="weeks">
+        <article class="week"><div class="week-range">01—02 周</div><div><h3>收集 10 个好奇心</h3><p>记录你主动搜索、愿意聊很久、常被人请教的事。</p></div><button class="check" aria-label="标记收集好奇心为完成">✓</button></article>
+        <article class="week"><div class="week-range">03—04 周</div><div><h3>完成 3 次微型体验</h3><p>每个方向投入不超过 3 小时，必须留下一个具体作品。</p></div><button class="check" aria-label="标记微型体验为完成">✓</button></article>
+        <article class="week"><div class="week-range">05—08 周</div><div><h3>选择一个方向公开行动</h3><p>连续四周输出、服务或制作，每周找 2 个人收集反馈。</p></div><button class="check" aria-label="标记公开行动为完成">✓</button></article>
+        <article class="week"><div class="week-range">09—12 周</div><div><h3>发起第一次付费测试</h3><p>给出明确报价，目标不是高收入，而是验证真实需求。</p></div><button class="check" aria-label="标记付费测试为完成">✓</button></article>
+      </div>
+    </div></section>
+
+    <section class="commit" id="start"><div><h2>写下你的第一步，<br>让计划真正开始。</h2><p>承诺不必宏大。填写一件你会在本周完成、能被验证的小行动。</p></div><div><form class="form" id="commitForm"><input id="commitInput" maxlength="50" placeholder="例如：周六访谈一位自由设计师" aria-label="本周行动"><button type="submit">保存行动</button></form><p class="form-note" id="formNote" aria-live="polite"></p></div></section>
   </main>
 
+  <footer><span>© 2026 向野 · 为还在寻找方向的人而做</span><span>慢一点，也是在向前。</span></footer>
+
   <script>
-    const inventory = [
-      { team: "阿根廷 主场 2026", price: 399, tag: "梅西同款", image: "https://images.unsplash.com/photo-1577212017184-80cc0da11082?auto=format&fit=crop&w=600&q=80" },
-      { team: "法国 客场 2026", price: 389, tag: "姆巴佩印号", image: "https://images.unsplash.com/photo-1517927033932-b3d18e61fb3a?auto=format&fit=crop&w=600&q=80" },
-      { team: "葡萄牙 主场 2026", price: 409, tag: "C罗纪念版", image: "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?auto=format&fit=crop&w=600&q=80" },
-      { team: "巴西 复古款", price: 359, tag: "1998 经典", image: "https://images.unsplash.com/photo-1570498839593-e565b39455fc?auto=format&fit=crop&w=600&q=80" }
-    ];
+    const weeks = [...document.querySelectorAll('.week')];
+    const saved = JSON.parse(localStorage.getItem('xiangye-progress') || '[]');
+    const progressText = document.getElementById('progressText');
+    const progressFill = document.getElementById('progressFill');
 
-    const productsEl = document.getElementById("products");
-    const cartList = document.getElementById("cartList");
-    const countEl = document.getElementById("count");
-    const totalEl = document.getElementById("total");
-
-    let cart = [];
-
-    function renderProducts() {
-      productsEl.innerHTML = inventory.map((item, idx) => `
-        <article class="card">
-          <img src="${item.image}" alt="${item.team}">
-          <div class="card-body">
-            <h3 class="team">${item.team}</h3>
-            <p class="meta">${item.tag}</p>
-            <div class="row">
-              <span class="price">¥${item.price}</span>
-              <button onclick="addToCart(${idx})">加入</button>
-            </div>
-          </div>
-        </article>
-      `).join("");
+    function updateProgress() {
+      const done = weeks.filter(week => week.classList.contains('done')).length;
+      progressText.textContent = `${done} / ${weeks.length}`;
+      progressFill.style.width = `${done / weeks.length * 100}%`;
+      localStorage.setItem('xiangye-progress', JSON.stringify(weeks.map(week => week.classList.contains('done'))));
     }
+    weeks.forEach((week, index) => {
+      if (saved[index]) week.classList.add('done');
+      week.querySelector('.check').addEventListener('click', () => { week.classList.toggle('done'); updateProgress(); });
+    });
+    updateProgress();
 
-    function addToCart(index) {
-      cart.push(inventory[index]);
-      renderCart();
-    }
-
-    function renderCart() {
-      cartList.innerHTML = cart.map(item => `<li>${item.team} - ¥${item.price}</li>`).join("");
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
-      totalEl.textContent = total;
-      countEl.textContent = cart.length;
-    }
-
-    renderProducts();
-    renderCart();
+    const form = document.getElementById('commitForm');
+    const input = document.getElementById('commitInput');
+    const note = document.getElementById('formNote');
+    const existingCommitment = localStorage.getItem('xiangye-commitment');
+    if (existingCommitment) { input.value = existingCommitment; note.textContent = '✓ 已保存。记得为它留出一段时间。'; }
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const value = input.value.trim();
+      if (!value) { note.textContent = '请先写下一件具体的小事。'; input.focus(); return; }
+      localStorage.setItem('xiangye-commitment', value);
+      note.textContent = '✓ 已保存。你的探索，从这一小步开始。';
+    });
   </script>
 </body>
 </html>
